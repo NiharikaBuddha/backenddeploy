@@ -29,7 +29,7 @@ exports.forgotpassword = async (req, res) => {
         
         const transEmailApi=new Sib.TransactionalEmailsApi();
         const sender={
-            email:"hrishikeshbalakrishna07@gmail.com"
+            email:"vijaysanugonda@gmail.com"
         }
     
         const receivers=[
@@ -42,7 +42,7 @@ exports.forgotpassword = async (req, res) => {
             to:receivers,
             subject:`this is the test subject`,
             textcontent:`reset password`,
-            htmlContent:`<a href="http://localhost:2500/resetpassword/${id}">Reset password</a>`
+            htmlContent:`<a href="http://localhost:3000/resetpassword/${id}">Reset password</a>`
             
         })
         console.log(data);

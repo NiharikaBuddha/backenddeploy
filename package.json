@@ -16,7 +16,7 @@
     "nodemon": "^2.0.22"
   },
   "dependencies": {
-    "aws-sdk": "^2.1390.0",
+    "aws-sdk": "^2.1417.0",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "concat-stream": "^2.0.0",
