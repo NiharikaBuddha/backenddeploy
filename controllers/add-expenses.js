@@ -107,7 +107,7 @@ exports.deleteExpense = async(req,res,next)=>{
 exports.showNumberExpense = async(req,res,next)=>{
     try{
         const{page,pagesize}=req.query;
-        const limits=+pagesize
+        const limits=+pagesize;
         const data=  await expense.findAll({
             offset:(page-1)*pagesize,
             limit:limits,

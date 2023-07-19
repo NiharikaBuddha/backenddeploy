@@ -6,6 +6,8 @@ require('dotenv').config();
 const bodyparser=require("body-parser")
 const sequelize=require("./util/database")
 const compression = require("compression");
+const helmet=require('helmet');
+const morgan=require('morgan');
 
 
 const expenseDetails=require("./routes/expenses")
@@ -24,7 +26,15 @@ const downloadFile = require("./models/download");
 
 
 const app=express();
+
+const accessLogStream=fs.createWriteStream(
+    path.join(__dirname,'access.log'),{
+    flags:'a'
+});
+
 app.use(cors());
+app.use(helmet());
+app.use(morgan('combined',{stream:accessLogStream}));
 app.use(bodyparser.json());
 
 app.use(compression());
@@ -54,5 +64,5 @@ downloadFile.belongsTo(User);
 console.log(process.env.NODE_ENV);
 
 sequelize.sync().then(()=>{
-    app.listen(process.env.PORT || 3500);
+    app.listen(process.env.PORT || 3000);
 })
