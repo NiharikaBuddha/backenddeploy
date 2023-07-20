@@ -8,6 +8,7 @@ const sequelize=require("./util/database")
 const compression = require("compression");
 const helmet=require('helmet');
 const morgan=require('morgan');
+const https=require('https');
 
 
 const expenseDetails=require("./routes/expenses")
@@ -39,6 +40,8 @@ app.use(bodyparser.json());
 
 app.use(compression());
 
+// const privateKey=fs.readFileSync('server.key');
+// const certificate=fs.readFileSync('server.cert');
 
 app.use(expenseDetails)
 app.use(userDetails);
@@ -64,5 +67,6 @@ downloadFile.belongsTo(User);
 console.log(process.env.NODE_ENV);
 
 sequelize.sync().then(()=>{
+    //https.createServer({key:privateKey,cert:certificate}, app).listen(process.env.PORT || 3000);
     app.listen(process.env.PORT || 3000);
 })
