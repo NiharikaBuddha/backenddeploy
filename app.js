@@ -66,6 +66,10 @@ downloadFile.belongsTo(User);
 
 console.log(process.env.NODE_ENV);
 
+app.use((req,res)=>{
+    res.sendFile(path.join(__dirname,`public/${req.url}`));
+});
+
 sequelize.sync().then(()=>{
     //https.createServer({key:privateKey,cert:certificate}, app).listen(process.env.PORT || 3000);
     app.listen(process.env.PORT || 3000);

@@ -41,7 +41,7 @@ async function showLeaderboard(){
         inputElement.onclick = async()=>{
                 
                 const token = localStorage.getItem("token");
-                const userLeaderboardArray= await axios.get("http://localhost:3000/leaderboard",{headers:{"Authorization": token}});
+                const userLeaderboardArray= await axios.get("http://13.49.49.241:3000/leaderboard",{headers:{"Authorization": token}});
                 console.log(userLeaderboardArray);
 
                 var leaderboardElem = document.getElementById("board");
@@ -74,7 +74,7 @@ async function showDownloadButton(){
         element.onclick = async()=>{
                 //e.preventDefault();
                 const token = localStorage.getItem('token');
-                const downloaded = await axios.get(`http://localhost:3000/download`,{headers:{"Authorization": token}});
+                const downloaded = await axios.get(`http://13.49.49.241:3000/download`,{headers:{"Authorization": token}});
                 console.log(downloaded);
                 if(downloaded.data.success===true){
                     var a = document.createElement("a");
@@ -127,7 +127,7 @@ window.addEventListener("DOMContentLoaded", async()=>{
         
        }
        else{
-        const response = await axios.get("http://localhost:3000/show-expenses",{headers: {"Authorization": token}})
+        const response = await axios.get("http://13.49.49.241:3000/show-expenses",{headers: {"Authorization": token}})
         console.log(response.data.allExpense);
         console.log(response.data.allExpense.length);
         for(var i=0; i<response.data.allExpense.length;i++){
@@ -145,7 +145,7 @@ window.addEventListener("DOMContentLoaded", async()=>{
 async function pagination(){
     try{
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:3000/show-expenses",{headers: {"Authorization": token}})
+        const response = await axios.get("http://13.49.49.241:3000/show-expenses",{headers: {"Authorization": token}})
         //console.log(response.data.allExpense);
         var pagination = document.getElementById("pagination");
         const pagesize=document.getElementById("pagesize");
@@ -156,7 +156,7 @@ async function pagination(){
             localStorage.setItem("pageSize", 5);
 
         }
-        const result = await axios.get(`http://localhost:3000/pagination?page=${1}&pagesize=${5}`,{headers: {"Authorization": token}});
+        const result = await axios.get(`http://13.49.49.241:3000/pagination?page=${1}&pagesize=${5}`,{headers: {"Authorization": token}});
         let allExpense = result.data.Data;
         console.log(allExpense);
 
@@ -169,7 +169,7 @@ async function pagination(){
             button.innerHTML=i+1;
             button.onclick = async()=>{
                 parentNode.innerHTML = "";
-                const ress = await axios.get(`http://localhost:3000/pagination?page=${page}&pagesize=${totalPagesize}`,{headers: {"Authorization": token}});
+                const ress = await axios.get(`http://13.49.49.241:3000/pagination?page=${page}&pagesize=${totalPagesize}`,{headers: {"Authorization": token}});
                 let allExpense = ress.data.Data;
                 console.log(allExpense);
                 for(let i=0;i<allExpense.length;i++){
@@ -210,7 +210,7 @@ async function deleteExpense(key){
     try{
         console.log(parentNode)
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:3000/delete-expenses/${key}`,{headers: {"Authorization": token}})
+        await axios.delete(`http://13.49.49.241:3000/delete-expenses/${key}`,{headers: {"Authorization": token}})
         console.log("Entered Deleted DOM");
         let child = document.getElementById(key);
         //console.log(child);
@@ -234,7 +234,7 @@ button.addEventListener("click", async(e)=>{
     };
     console.log(myObj);
     const token = localStorage.getItem('token');
-    const addExpense = await axios.post("http://localhost:3000/add-expenses",myObj,{headers:{'Authorization': token}})
+    const addExpense = await axios.post("http://13.49.49.241:3000/add-expenses",myObj,{headers:{'Authorization': token}})
         //console.log(response);
         console.log("post -->", addExpense.data.newexpense);
         showBrowser(addExpense.data.newexpense);
@@ -251,13 +251,13 @@ button.addEventListener("click", async(e)=>{
 document.getElementById("premium").onclick = async function(e){
     try{
     const token = localStorage.getItem('token');
-    const response = await axios.get('http://localhost:3000/premium-membership',{headers:{"Authorization": token}});
+    const response = await axios.get('http://13.49.49.241:3000/premium-membership',{headers:{"Authorization": token}});
     console.log(response);
     var options = {
         "key": response.data.key_id,
         "order_id": response.data.order.id,
         "handler": async function(response){
-            let result = await axios.post("http://localhost:3000/update-transaction-status",{
+            let result = await axios.post("http://13.49.49.241:3000/update-transaction-status",{
                 order_id: options.order_id,
                 payment_id: response.razorpay_payment_id,
         },{headers: {"Authorization": token}})
@@ -281,7 +281,7 @@ document.getElementById("premium").onclick = async function(e){
 
     rzp1.on("payment.failed", async()=>{
         key = response.data.order.id;
-        let failed = await axios.post("http://localhost:3000/update-transaction-status",{
+        let failed = await axios.post("http://13.49.49.241:3000/update-transaction-status",{
             order_id: key,
             payment_id: null
         },{headers: {"Authorization": token}})
