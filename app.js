@@ -70,7 +70,6 @@ app.use((req,res)=>{
     res.sendFile(path.join(__dirname,`public/${req.url}`));
 });
 
-console.log("updated node_modules");
 
 sequelize.sync().then(()=>{
     //https.createServer({key:privateKey,cert:certificate}, app).listen(process.env.PORT || 3000);
