@@ -5,9 +5,6 @@ const cors=require("cors")
 require('dotenv').config();
 const bodyparser=require("body-parser")
 const sequelize=require("./util/database")
-const compression = require("compression");
-const helmet=require('helmet');
-const morgan=require('morgan');
 const https=require('https');
 
 
@@ -35,11 +32,8 @@ const accessLogStream=fs.createWriteStream(
 });
 
 app.use(cors());
-app.use(helmet());
-app.use(morgan('combined',{stream:accessLogStream}));
 app.use(bodyparser.json());
 
-app.use(compression());
 
 // const privateKey=fs.readFileSync('server.key');
 // const certificate=fs.readFileSync('server.cert');
@@ -65,7 +59,6 @@ forgotPassword.belongsTo(User);
 User.hasMany(downloadFile);
 downloadFile.belongsTo(User);
 
-console.log(process.env.NODE_ENV);
 
 app.use((req,res)=>{
     console.log("req.url=",req.url);
