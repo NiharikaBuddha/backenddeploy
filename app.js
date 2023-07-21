@@ -23,6 +23,7 @@ const Expense = require("./models/expense");
 const Order = require("./models/orders");
 const forgotPassword = require("./models/forgotpassword");
 const downloadFile = require("./models/download");
+const { log } = require("console");
 
 
 
@@ -75,5 +76,7 @@ console.log("this is app.js");
 
 sequelize.sync().then(()=>{
     //https.createServer({key:privateKey,cert:certificate}, app).listen(process.env.PORT || 3000);
-    app.listen(process.env.PORT || 3000);
+    app.listen(3000,()=>{
+        console.log('server is running on port 3000');
+    });
 })
