@@ -67,6 +67,7 @@ downloadFile.belongsTo(User);
 console.log(process.env.NODE_ENV);
 
 app.use((req,res)=>{
+    console.log("req.url=",req.url);
     res.sendFile(path.join(__dirname,`public/${req.url}`));
 });
 
