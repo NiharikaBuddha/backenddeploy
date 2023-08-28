@@ -8,7 +8,9 @@ const sequelize = require("../util/database");
 const Forgotpassword = require("../models/forgotpassword");
 const uuid = require("uuid");
 const Sib = require("sib-api-v3-sdk");
-require('dotenv').config();
+// require('dotenv').config();
+const dotenv = require('dotenv');
+dotenv.config();
 exports.forgotpassword = async (req, res) => {
     try {
         const { email } =  req.body;
@@ -19,17 +21,22 @@ exports.forgotpassword = async (req, res) => {
         // console.log(User);
         if(User){
             const id = uuid.v4();
-            console.log(id);
+            // console.log(id);
             const result = await User.createForgotpassword({ id , active: true });
-            console.log(result); 
-            const client=Sib.ApiClient.instance
+            // console.log("result:",result); 
+
+        const client=Sib.ApiClient.instance
             
         const apiKey=client.authentications['api-key']
-        apiKey.apiKey=process.env.SENDINBLUE_API_KEY
+        // apiKey.apiKey=process.env.SENDINBLUE_API_KEY
+        apiKey.apiKey='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'
+
+        console.log("apiKey.apiKey",process.env.SENDINBLUE_API_KEY); 
+        
         
         const transEmailApi=new Sib.TransactionalEmailsApi();
         const sender={
-            email:"vijaysanugonda@gmail.com"
+            email:"niharikabuddha98@gmail.com"
         }
     
         const receivers=[
@@ -37,21 +44,22 @@ exports.forgotpassword = async (req, res) => {
                 email:email
             }
         ]
+        console.log("emailll",email); 
         const data= await transEmailApi.sendTransacEmail({
             sender,
             to:receivers,
             subject:`this is the test subject`,
             textcontent:`reset password`,
-            htmlContent:`<a href="http://16.171.189.212:3000/resetpassword/${id}">Reset password</a>`
+            htmlContent:`<a href="http://localhost:3000/resetpassword/${id}">Reset password</a>`
             
         })
-        console.log(data);
+        console.log("dataa:",data);
         res.json({msg:"Mail sent successfully", success:true});
         }else{
             res.json({msg:"User doesnt exist", success:false});
         }
     }catch(error){
-        console.log(error);
+        console.log("errorr:",error);
     }
 }
 
@@ -62,14 +70,14 @@ exports.resetpassword = async(req, res) => {
         { 
             id: id
          }})
-    console.log(forgotpasswordrequest);
+    // console.log(forgotpasswordrequest);
         if(forgotpasswordrequest){
             await forgotpasswordrequest.update({ active: false});
             res.send(`<html>
                                     <script>
                                         function formsubmitted(e){
                                             e.preventDefault();
-                                            console.log('called')
+                                            // console.log('called')
                                         }
                                     </script>
                                     <form action="/updatepassword/${id}" method="get">
@@ -84,7 +92,7 @@ exports.resetpassword = async(req, res) => {
 
     }
     }catch(err){
-        console.log(err);
+        // console.log(err);
     }
 
 }
@@ -103,7 +111,7 @@ exports.updatepassword = async(req, res) => {
                         bcrypt.hash(newpassword, 5, async(err, hash)=>{
                             // Store hash in your password DB.
                             if(err){
-                                console.log(err);
+                                // console.log(err);
                                 throw new Error(err);
                             }
                             await User.update({ password: hash })
