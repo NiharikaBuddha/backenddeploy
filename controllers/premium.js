@@ -12,8 +12,11 @@ require('dotenv').config();
 exports.premiumMembership = async(req,res,next)=>{
     try{
             var rzp = new RazorPay({
-                key_id: process.env.RAZORPAY_KEY_ID,
-                key_secret: process.env.RAZORPAY_KEY_SECRET
+                // key_id: process.env.RAZORPAY_KEY_ID,
+                key_id: 'rzp_test_Uf14pdWIGMqjWo',
+                // key_secret: process.env.RAZORPAY_KEY_SECRET
+                key_secret: 'kf9TSLPK97yjEIAFFZBqxXO5'
+
             })
             //console.log(rzp);
             const amount=2500;

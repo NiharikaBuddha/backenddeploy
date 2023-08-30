@@ -10,7 +10,7 @@ const RazorPay = require('razorpay');
 routes.get("/leaderboard",userAuthentication.authenticate, premiumFeature.leaderboardDetails);
 
 //download particular user expense
-// routes.get("/download",userAuthentication.authenticate, premiumFeature.downloadExpense);
+routes.get("/download",userAuthentication.authenticate, premiumFeature.downloadExpense);
 
 
 

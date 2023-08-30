@@ -6,6 +6,9 @@ require('dotenv').config();
 const bodyparser=require("body-parser")
 const sequelize=require("./util/database")
 const https=require('https');
+const helmet = require('helmet');
+const compression = require('compression');
+const morgan = require("morgan");
 
 
 const expenseDetails=require("./routes/expenses")
@@ -33,6 +36,9 @@ const accessLogStream=fs.createWriteStream(
 
 app.use(cors());
 app.use(bodyparser.json());
+app.use(helmet());
+app.use(compression());
+app.use(morgan('combined'));
 
 
 // const privateKey=fs.readFileSync('server.key');
